@@ -1,8 +1,5 @@
 const Cart = require("../models/Cart");
 
-/* =======================
-   GET CART
-======================= */
 const getCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id }).populate(
@@ -13,9 +10,8 @@ const getCart = async (req, res) => {
       return res.status(200).json([]);
     }
 
-    // ✅ FORMAT DATA FOR FRONTEND
     const formattedCart = cart.products.map((item) => ({
-      id: item._id, // cart item id
+      id: item._id,
       productId: item.product._id,
       name: item.product.name,
       price: item.product.price,
@@ -29,9 +25,6 @@ const getCart = async (req, res) => {
   }
 };
 
-/* =======================
-   ADD TO CART
-======================= */
 const addToCart = async (req, res) => {
   try {
     const { productId, quantity = 1 } = req.body;
@@ -67,9 +60,6 @@ const addToCart = async (req, res) => {
   }
 };
 
-/* =======================
-   UPDATE QUANTITY
-======================= */
 const updateQuantity = async (req, res) => {
   try {
     const { quantity } = req.body;
@@ -89,9 +79,6 @@ const updateQuantity = async (req, res) => {
   }
 };
 
-/* =======================
-   REMOVE ITEM
-======================= */
 const removeItem = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id });

@@ -31,29 +31,45 @@ const orderSchema = new mongoose.Schema(
 
     paymentMethod: {
       type: String,
-      default: "COD", // COD / UPI / Card
+      enum: ["COD", "UPI", "Card"],
+      default: "COD",
     },
 
     paymentStatus: {
       type: String,
-      default: "Pending", // Pending / Paid
+      enum: ["Pending", "Paid", "Failed"],
+      default: "Pending",
     },
 
     orderStatus: {
       type: String,
-      default: "Placed", // Placed / Shipped / Delivered / Cancelled
+      enum: ["Placed", "Shipped", "Delivered", "Cancelled"],
+      default: "Placed",
     },
 
-    itemsPrice: Number,
-    shippingPrice: Number,
-    totalAmount: Number,
+    itemsPrice: {
+      type: Number,
+      default: 0,
+    },
+
+    shippingPrice: {
+      type: Number,
+      default: 0,
+    },
+
+    totalAmount: {
+      type: Number,
+      default: 0,
+    },
 
     orderedAt: {
       type: Date,
       default: Date.now,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 module.exports = mongoose.model("Order", orderSchema);
